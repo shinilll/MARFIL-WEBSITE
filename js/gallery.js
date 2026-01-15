@@ -1,0 +1,403 @@
+// Gallery: Album grid + vertical-scroll lightbox per collection
+document.addEventListener('DOMContentLoaded', () => {
+    const galleryGrid = document.querySelector('.gallery-grid');
+    const loadMoreBtn = document.getElementById('load-more');
+    const lightbox = document.getElementById('lightbox');
+
+    //  ollections assets
+    const collections = [
+        {
+            title: 'Art Compilation',
+            cover: 'assets/images/art1.png',
+            images: [
+                { src: 'assets/images/art1.png', alt: 'Art 1' },
+                { src: 'assets/images/art2.png', alt: 'Art 2' },
+                { src: 'assets/images/art3.png', alt: 'Art 3' },
+                { src: 'assets/images/art4.png', alt: 'Detective Daisuke Kambe' },
+                { src: 'assets/images/art5.png', alt: 'ASTA Black Clover' },
+                { src: 'assets/images/digital.png', alt: 'Digital Art' },
+                { src: 'assets/images/digi2.png', alt: 'Digital Art' },
+                { src: 'assets/images/tb.png', alt: 'True Beauty' },
+                { src: 'assets/images/sl.png', alt: 'Solo Leveling' },
+                { src: 'assets/images/hori.png', alt: 'Horimiya' },
+                { src: 'assets/images/itachi.png', alt: 'Uchiha Itachi' },
+                { src: 'assets/images/hina.png', alt: 'Shoyo Hinata' },
+                { src: 'assets/images/levi.png', alt: 'Levi Ackerman' },
+                { src: 'assets/images/naruto.png', alt: 'Uzumaki Naruto' },
+                { src: 'assets/images/gojo.png', alt: 'Satoru Gojo' },
+                { src: 'assets/images/gk.png', alt: 'GojoXKakashi' },
+                { src: 'assets/images/shinubo.png', alt: 'Shinubo Kocho' },
+                { src: 'assets/images/tokyo.png', alt: 'Tokyo Revengers' },
+                { src: 'assets/images/miku.png', alt: 'Miku Nakano' },
+                { src: 'assets/images/baji.png', alt: 'Baji Keisuke' },
+                { src: 'assets/images/draken.png', alt: 'Draken' },
+                { src: 'assets/images/sukuna.png', alt: 'Sukuna' },
+                { src: 'assets/images/saiki.png', alt: 'Saiki Kusuo' },
+                { src: 'assets/images/eromanga.png', alt: 'Sagiri Izumi' },
+                { src: 'assets/images/takt.png', alt: 'Takt Op' },
+                { src: 'assets/images/rim.png', alt: 'Rimuru Tempest' },
+                { src: 'assets/images/emma.png', alt: 'Emma' },
+                { src: 'assets/images/destiny.png', alt: 'Destiny' },
+                { src: 'assets/images/fireforce.png', alt: 'Fire Force' },
+                { src: 'assets/images/summer.png', alt: 'Summer Girl' },
+                { src: 'assets/images/tengen.png', alt: 'Tengen Uzui' },
+                { src: 'assets/images/rudeus.png', alt: 'Rudeus Greyrat' },
+                { src: 'assets/images/dabi.png', alt: 'Dabi' },
+                { src: 'assets/images/marin.png', alt: 'Marin Kitagawa' },
+                { src: 'assets/images/marin1.png', alt: 'Marin Kitagawa' },
+                { src: 'assets/images/digi1.png', alt: 'Digital OG Art' },
+                { src: 'assets/images/digi3.png', alt: 'Digital OG Art' },
+                { src: 'assets/images/hot.png', alt: 'Hot Guy' },
+                { src: 'assets/images/pretty.png', alt: 'Pretty Girl' },
+                { src: 'assets/images/dek.png', alt: 'Izuku Midoriya' },
+                { src: 'assets/images/rengoku.png', alt: 'Kyojuro Rengoku' },
+                { src: 'assets/images/words.png', alt: 'Words Bubble Up Like Soda Pop' },
+                { src: 'assets/images/spy.png', alt: 'SpyXFamily' },
+                { src: 'assets/images/demon.png', alt: 'Demon Slayer' },
+                { src: 'assets/images/fire.png', alt: 'Fire Force' },
+                { src: 'assets/images/sketch.png', alt: 'Sketch' },
+                { src: 'assets/images/luffy.png', alt: 'Monkey D. Luffy' },
+                { src: 'assets/images/mono.png', alt: 'Monochromatic' },
+                { src: 'assets/images/remake.png', alt: 'Art Remake' },
+                { src: 'assets/images/rudo.png', alt: 'Gachiakuta' },
+                { src: 'assets/images/kpop.png', alt: 'Kpop Demon Hunters' },
+                { src: 'assets/images/women.png', alt: "Women's Month" },
+                { src: 'assets/images/gojo1.png', alt: 'Satoru Gojo' },
+                { src: 'assets/images/mihon.png', alt: 'Mihon Tachiyomi' },
+                { src: 'assets/images/windbreaker.png', alt: 'SHELLY Wind Breaker' },
+                { src: 'assets/images/tomie.png', alt: 'Tomie Kawakami' },
+                { src: 'assets/images/coffee.png', alt: 'Coffee Art' },
+                { src: 'assets/images/windbreaker1.png', alt: 'NOAH Wind Breaker' },
+                { src: 'assets/images/onepiece.png', alt: 'One Piece ' },
+                { src: 'assets/images/paint.png', alt: '1st Paint' },
+                { src: 'assets/images/lookism.png', alt: 'DANIEL PARK Lookism ' },
+                { src: 'assets/images/digi.png', alt: 'Digital OG Art' },
+                { src: 'assets/images/marinn.png', alt: 'Marin Kitagawa' },
+                { src: 'assets/images/remake1.png', alt: 'Art Remake' },
+                { src: 'assets/images/remake2.png', alt: 'Art Remake' },
+                { src: 'assets/images/natsu.png', alt: 'Natsu Dragneel' },
+                { src: 'assets/images/lol.png', alt: 'Hotty' },
+                { src: 'assets/images/digi4.png', alt: 'Digital Art' },
+                { src: 'assets/images/digi5.png', alt: 'Digital Art' },
+                { src: 'assets/images/wotakoi.png', alt: 'Wotakoi: Love is Hard for Otaku' },
+                { src: 'assets/images/powerpuffgirls.png', alt: 'Power Puff Girls' },
+                { src: 'assets/images/siesta.png', alt: 'Siesta' },
+                { src: 'assets/images/pieck.png', alt: 'Pieck' },
+                { src: 'assets/images/uchihas.png', alt: "Uchiha's" },
+                { src: 'assets/images/sculp.png', alt: "Sculpture" },
+                { src: 'assets/images/slamdunk.png', alt: "Slam Dunk" },
+                { src: 'assets/images/realistic.png', alt: "Realistic" },
+                { src: 'assets/images/ai.png', alt: "Oshinoko" },
+                { src: 'assets/images/flyingkisss.gif', alt: 'GIF Animation' },
+                { src: 'assets/images/amongus.gif', alt: 'GIF Among Us' },
+                { src: 'assets/images/missujutsu.gif', alt: 'NARUTO JUTSU GIF Animation' },
+                { src: 'assets/images/missyou.gif', alt: 'NARUTO GIF Animation' },
+                { src: 'assets/images/hikirby.gif', alt: 'Hi KIRBY GIF Animation' },
+                { src: 'assets/images/kirbyfinall.gif', alt: 'Kirby Flying GIF Animation' },
+                { src: 'assets/images/carameldansendico.gif', alt: 'Caramel Dansen GIF Animation' },
+                { src: 'assets/images/blackpanther.gif', alt: 'Black Panther GIF Animation' },
+                { src: 'assets/images/sayawgoy.gif', alt: 'Dance GIF Animation' },
+  
+            ],
+        },
+        {
+            title: 'Mí Mismo',
+            cover: 'assets/images/cover.png',
+            images: [
+                { src: 'assets/images/1.png', alt: 'MARFIL' },
+                { src: 'assets/images/me.png', alt: 'MARFIL' },
+                { src: 'assets/images/2.png', alt: 'MARFIL' },
+                { src: 'assets/images/3.png', alt: 'MARFIL' },
+                { src: 'assets/images/4.png', alt: 'MARFIL' },
+                { src: 'assets/images/5.png', alt: 'MARFIL' },
+                { src: 'assets/images/6.png', alt: 'MARFIL' },
+                { src: 'assets/images/7.png', alt: 'MARFIL' },
+                { src: 'assets/images/8.png', alt: 'MARFIL' },
+                { src: 'assets/images/9.png', alt: 'MARFIL' },
+                { src: 'assets/images/10.png', alt: 'MARFIL' },
+                { src: 'assets/images/11.png', alt: 'MARFIL' },
+                { src: 'assets/images/12.png', alt: 'MARFIL' },
+                { src: 'assets/images/13.png', alt: 'MARFIL' },
+                { src: 'assets/images/14.png', alt: 'MARFIL' },
+                { src: 'assets/images/15.png', alt: 'MARFIL' },
+                { src: 'assets/images/16.jpg', alt: 'MARFIL' },
+                { src: 'assets/images/17.png', alt: 'MARFIL' },
+                { src: 'assets/images/18.png', alt: 'MARFIL' },
+                { src: 'assets/images/19.png', alt: 'MARFIL' },
+                { src: 'assets/images/20.png', alt: 'MARFIL' },
+                { src: 'assets/images/21.png', alt: 'MARFIL' },
+                { src: 'assets/images/22.png', alt: 'MARFIL' },
+                { src: 'assets/images/23.png', alt: 'MARFIL' },
+                { src: 'assets/images/24.png', alt: 'MARFIL' },
+                { src: 'assets/images/25.png', alt: 'MARFIL' },
+                { src: 'assets/images/26.png', alt: 'MARFIL' },
+                { src: 'assets/images/27.png', alt: 'MARFIL' },
+                { src: 'assets/images/28.png', alt: 'MARFIL' },
+                { src: 'assets/images/29.png', alt: 'MARFIL' },
+                { src: 'assets/images/30.png', alt: 'MARFIL' },
+                { src: 'assets/images/31.png', alt: 'MARFIL' },
+                { src: 'assets/images/32.png', alt: 'MARFIL' },
+                { src: 'assets/images/33.png', alt: 'MARFIL' },
+                { src: 'assets/images/34.png', alt: 'MARFIL' },
+                { src: 'assets/images/35.png', alt: 'MARFIL' },
+                { src: 'assets/images/36.png', alt: 'MARFIL' },
+                { src: 'assets/images/37.png', alt: 'MARFIL' },
+                { src: 'assets/images/38.png', alt: 'MARFIL' },
+                { src: 'assets/images/39.png', alt: 'MARFIL' },
+                { src: 'assets/images/40.png', alt: 'MARFIL' },
+                { src: 'assets/images/41.png', alt: 'MARFIL' },
+                { src: 'assets/images/42.png', alt: 'MARFIL' },
+                { src: 'assets/images/43.png', alt: 'MARFIL' },
+                { src: 'assets/images/44.png', alt: 'MARFIL' },
+                { src: 'assets/images/45.png', alt: 'MARFIL' },
+                { src: 'assets/images/46.png', alt: 'MARFIL' },
+                { src: 'assets/images/47.png', alt: 'MARFIL' },
+                { src: 'assets/images/48.png', alt: 'MARFIL' },
+                { src: 'assets/images/49.png', alt: 'MARFIL' },
+                { src: 'assets/images/50.png', alt: 'MARFIL' },
+                { src: 'assets/images/51.png', alt: 'MARFIL' },
+                { src: 'assets/images/52.png', alt: 'MARFIL' },
+                { src: 'assets/images/53.png', alt: 'MARFIL' },
+                { src: 'assets/images/54.png', alt: 'MARFIL' },
+                { src: 'assets/images/55.png', alt: 'MARFIL' },
+                { src: 'assets/images/56.png', alt: 'MARFIL' },
+                { src: 'assets/images/57.png', alt: 'MARFIL' },
+                { src: 'assets/images/58.jpg', alt: 'MARFIL' },
+                { src: 'assets/images/59.jpg', alt: 'MARFIL' },
+                { src: 'assets/images/60.png', alt: 'MARFIL' },
+                { src: 'assets/images/61.png', alt: 'MARFIL' },
+                { src: 'assets/images/animation.png', alt: 'MARFIL' },
+                { src: 'assets/images/animation1.png', alt: 'MARFIL' },
+
+            ],
+        },
+        {
+            title: 'Aesthetic, I Guess',
+            cover: 'assets/images/cover1.png',
+            images: [
+                { src: 'assets/images/01.png', alt: 'Serene' },
+                { src: 'assets/images/02.png', alt: 'Medellin' },
+                { src: 'assets/images/03.png', alt: 'Daanbantayan Sea Wall' },
+                { src: 'assets/images/04.png', alt: 'Bogo City' },
+                { src: 'assets/images/05.png', alt: 'Bogo City' },
+                { src: 'assets/images/06.png', alt: 'Paypay, Daanbantayan' },
+                { src: 'assets/images/07.png', alt: 'Bogo City' },
+                { src: 'assets/images/08.png', alt: 'Bogo City' },
+                { src: 'assets/images/09.png', alt: 'Bakhawan, Paypay' },
+                { src: 'assets/images/010.png', alt: 'Bakhawan, Paypay' },
+                { src: 'assets/images/011.png', alt: 'Mandaue City' },
+                { src: 'assets/images/012.png', alt: '' },
+                { src: 'assets/images/013.png', alt: '' },
+                { src: 'assets/images/014.png', alt: '' },
+                { src: 'assets/images/015.png', alt: 'MARFIL' },
+                { src: 'assets/images/016.png', alt: 'MARFIL' },
+                { src: 'assets/images/017.png', alt: 'Figures' },
+                { src: 'assets/images/018.png', alt: 'Figures' },
+                { src: 'assets/images/019.png', alt: 'Amihan Beach Cabanas' },
+                { src: 'assets/images/020.png', alt: 'Amihan Beach Cabanas' },
+                { src: 'assets/images/021.png', alt: 'Amihan Beach Cabanas' },
+                { src: 'assets/images/022.png', alt: 'Drinks' },
+                { src: 'assets/images/023.png', alt: 'Comp' },
+                { src: 'assets/images/024.png', alt: 'Damn Clouds' },
+                { src: 'assets/images/025.png', alt: 'Commuter Wew' },
+                { src: 'assets/images/026.png', alt: 'Leaves by Ben&Ben' },
+                { src: 'assets/images/027.png', alt: 'Pantalan' },
+                { src: 'assets/images/028.png', alt: 'Murple' },
+                { src: 'assets/images/029.png', alt: 'Missyou or McDo' },
+                { src: 'assets/images/030.png', alt: 'Virgen de los Remedios Parish' },
+                { src: 'assets/images/031.png', alt: 'Odlot, Bogo City' },
+                { src: 'assets/images/032.png', alt: 'Waves' },
+                { src: 'assets/images/033.png', alt: 'Wines' },
+                { src: 'assets/images/034.png', alt: 'Landers' },
+                { src: 'assets/images/035.png', alt: "Basilica Minore del Sto. Niño de Cebu, Pilgrim's Center" },
+                { src: 'assets/images/036.png', alt: "Basilica Minore del Sto. Niño de Cebu, Pilgrim's Center" },
+                { src: 'assets/images/037.png', alt: 'Fave' },
+                { src: 'assets/images/038.png', alt: 'Dollah' },
+                { src: 'assets/images/039.png', alt: 'Simala Parish Church' },
+                { src: 'assets/images/040.png', alt: 'Simala Parish Church' },
+                { src: 'assets/images/041.png', alt: 'Mlue' },
+                { src: 'assets/images/042.png', alt: 'New Year 2024' },
+                { src: 'assets/images/043.png', alt: 'Seart' },
+                { src: 'assets/images/044.png', alt: 'PeSea' },
+                { src: 'assets/images/045.png', alt: 'Archdiocesan Shrine of St. Vincent Ferrer' },
+                { src: 'assets/images/046.png', alt: 'Rose Apple Blossom lol' },
+                { src: 'assets/images/047.png', alt: 'Ferris Wheel' },
+                { src: 'assets/images/048.png', alt: 'Tayokaya' },
+                { src: 'assets/images/049.png', alt: 'Maravilla Beach' },
+                { src: 'assets/images/050.png', alt: 'Simala Parish Church' },
+                { src: 'assets/images/051.png', alt: 'Golden Sand' },
+                { src: 'assets/images/052.png', alt: 'Golden Sand' },
+                { src: 'assets/images/053.png', alt: 'Golden Sand' },
+                { src: 'assets/images/054.png', alt: 'Golden Sand' },
+                { src: 'assets/images/055.png', alt: 'Golden Sand' },
+                { src: 'assets/images/056.png', alt: 'Golden Sand' },
+                { src: 'assets/images/057.png', alt: 'Golden Sand' },
+                { src: 'assets/images/058.png', alt: 'Golden Sand' },
+                { src: 'assets/images/059.png', alt: 'Bitoon, Daanbantayan' },
+                { src: 'assets/images/060.png', alt: 'VitaSea' },
+                { src: 'assets/images/061.png', alt: 'Bebeqo' },
+                { src: 'assets/images/062.png', alt: 'New Year 2025' },
+                { src: 'assets/images/063.png', alt: 'Cebu Safari' },
+                { src: 'assets/images/064.png', alt: 'Lion' },
+                { src: 'assets/images/065.png', alt: 'Camel' },
+                { src: 'assets/images/066.png', alt: 'Flamingo' },
+                { src: 'assets/images/067.png', alt: 'Koi' },
+                { src: 'assets/images/068.png', alt: 'Lalay' },
+                { src: 'assets/images/069.png', alt: 'Otter' },
+                { src: 'assets/images/070.png', alt: 'Borgah' },
+                { src: 'assets/images/071.png', alt: 'Orangutan' },
+                { src: 'assets/images/072.png', alt: 'Capybara' },
+                { src: 'assets/images/073.png', alt: 'Parrot' },
+                { src: 'assets/images/074.png', alt: 'Serval' },
+                { src: 'assets/images/075.png', alt: 'Uncle Lion' },
+                { src: 'assets/images/076.png', alt: 'Turtey' },
+                { src: 'assets/images/077.png', alt: 'Otter' },
+                { src: 'assets/images/078.png', alt: 'Crane' },
+                { src: 'assets/images/079.png', alt: 'Birdy' },
+                { src: 'assets/images/080.png', alt: 'Ibis' },
+                { src: 'assets/images/081.png', alt: 'Birdy' },
+                { src: 'assets/images/082.png', alt: 'Birds' },
+                { src: 'assets/images/083.png', alt: 'Red Lory' },
+                { src: 'assets/images/084.png', alt: 'Missusaur' },
+                { src: 'assets/images/085.png', alt: 'Mellow' },
+                { src: 'assets/images/086.png', alt: 'Mellow' },
+                { src: 'assets/images/087.png', alt: 'Mekong' },
+                { src: 'assets/images/088.png', alt: 'Ah Life~' },
+                { src: 'assets/images/089.png', alt: 'Aqua' },
+                { src: 'assets/images/090.png', alt: 'Aqua' },
+               { src: 'assets/images/091.png', alt: 'Iguana' },
+                { src: 'assets/images/092.png', alt: 'Mreen' },
+                { src: 'assets/images/093.png', alt: 'Iguana' },
+                { src: 'assets/images/094.png', alt: 'Rainbow Lorikeets ' },
+                { src: 'assets/images/095.png', alt: 'Finding Nemo' },
+                { src: 'assets/images/096.png', alt: 'Mad Puffer' },
+                { src: 'assets/images/097.png', alt: 'Blub' },
+                { src: 'assets/images/098.png', alt: 'Lionfish' },
+                { src: 'assets/images/099.png', alt: 'Octy' },
+                { src: 'assets/images/0100.png', alt: 'Fishtea' },
+                { src: 'assets/images/0101.png', alt: 'Stingray' },
+                { src: 'assets/images/0102.png', alt: 'View' },
+                { src: 'assets/images/0103.png', alt: 'Welcome' },
+                { src: 'assets/images/0104.png', alt: 'Lalay' },
+                { src: 'assets/images/0105.png', alt: 'Tired' },
+                { src: 'assets/images/0106.png', alt: 'Hellooww' },
+                { src: 'assets/images/0107.png', alt: 'Lutjanus' },
+                { src: 'assets/images/0108.png', alt: 'Pennant Coralfish' },
+                { src: 'assets/images/0109.png', alt: 'Rockmover Wrasse' },
+                { src: 'assets/images/0110.png', alt: 'Garden Eel' },
+                { src: 'assets/images/0111.png', alt: 'Pachycerianthus Orange' },
+                { src: 'assets/images/0112.png', alt: 'Bantayan Island' },
+                { src: 'assets/images/0113.png', alt: 'Bantayan Island' },
+                { src: 'assets/images/0114.png', alt: 'Bantayan Island' },
+                { src: 'assets/images/0115.png', alt: 'Bantayan Island' },
+                { src: 'assets/images/0116.png', alt: 'Food' },
+                { src: 'assets/images/0117.png', alt: 'Bantayan Island' },
+                { src: 'assets/images/0118.png', alt: 'Food' },
+                { src: 'assets/images/0119.png', alt: 'Food' },
+                { src: 'assets/images/0120.png', alt: 'Food' },
+                { src: 'assets/images/0121.png', alt: 'Food' },
+                { src: 'assets/images/0122.png', alt: 'Food' },
+                { src: 'assets/images/0123.png', alt: 'Food' },
+                { src: 'assets/images/0124.png', alt: 'Food' },
+                { src: 'assets/images/0125.png', alt: 'Food' },
+                { src: 'assets/images/0126.png', alt: 'Food' },
+                { src: 'assets/images/0127.png', alt: 'Prom' },
+                { src: 'assets/images/0128.png', alt: 'Food' },
+                { src: 'assets/images/0129.png', alt: 'Food' },
+
+            ],
+        },
+       {
+            title: 'Mí Familia',
+            cover: 'assets/images/fam2.png',
+            images: [
+                { src: 'assets/images/a.png', alt: 'COMING SOON' },
+                { src: 'assets/images/b.png', alt: 'So Tired' },
+                { src: 'assets/images/c.png', alt: '' },
+                { src: 'assets/images/d.png', alt: '' },
+                { src: 'assets/images/e.png', alt: '' },
+                { src: 'assets/images/f.png', alt: '' },
+                { src: 'assets/images/g.png', alt: '' },
+                { src: 'assets/images/h.png', alt: 'COMING SOON' },
+                { src: 'assets/images/i.png', alt: 'So Tired' },
+                { src: 'assets/images/j.png', alt: '' },
+                { src: 'assets/images/k.png', alt: '' },
+                { src: 'assets/images/l.png', alt: '' },
+                { src: 'assets/images/m.png', alt: '' },
+                { src: 'assets/images/n.png', alt: '' },
+            ],
+        },
+      {
+            title: 'Coming Soon',
+            cover: 'assets/images/cover2.png',
+            images: [
+                { src: 'assets/images/', alt: "What's Next?" },
+                { src: 'assets/images/', alt: '' },
+                { src: 'assets/images/', alt: '' },
+                { src: 'assets/images/', alt: '' },
+                { src: 'assets/images/', alt: '' },
+                { src: 'assets/images/', alt: '' },
+                { src: 'assets/images/', alt: '' },
+            ],
+        },
+    ];
+
+    // album cards
+    function renderAlbums() {
+        galleryGrid.classList.add('albums');
+        galleryGrid.innerHTML = '';
+
+        collections.forEach((col, idx) => {
+            const album = document.createElement('div');
+            album.className = 'album';
+            album.innerHTML = `
+                <div class="album-cover">
+                    <img src="${col.cover}" alt="${col.title}" loading="lazy"/>
+                    <div class="album-overlay">
+                        <h3>${col.title}</h3>
+                        <div class="view-album" role="button">View Album</div>
+                    </div>
+                </div>
+            `;
+
+            album.addEventListener('click', () => openLightbox(col));
+            galleryGrid.appendChild(album);
+        });
+
+        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+    }
+
+    // Open lightbox
+    function openLightbox(collection) {
+        lightbox.innerHTML = `
+            <span class="close-btn" aria-label="Close">&times;</span>
+            <div class="lightbox-body" role="dialog" aria-modal="true">
+                <div class="lightbox-grid">
+                    ${collection.images.map(img => `
+                        <div class="lightbox-grid-item">
+                            <img src="${img.src}" alt="${img.alt}" class="lightbox-image" />
+                            ${img.alt ? `<div class="lightbox-caption">${img.alt}</div>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        lightbox.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        // Close interactions
+        const close = () => {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.removeEventListener('keydown', onKeydown);
+        };
+        const onKeydown = (e) => { if (e.key === 'Escape') close(); };
+        lightbox.querySelector('.close-btn').addEventListener('click', close);
+        document.addEventListener('keydown', onKeydown);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+    }
+
+    // Initialize
+    renderAlbums();
+});

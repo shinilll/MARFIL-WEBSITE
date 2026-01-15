@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Gallery</title>
+    <link rel="stylesheet" href="css/style.css?v=20260114-2">
+    <link rel="stylesheet" href="css/lightbox.css?v=20260114-2">
+</head>
+<body>
+    <nav id="navbar">
+        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-list">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        <ul id="nav-list">
+            <li class="menu-close-item"><button class="menu-close" aria-label="Close menu" title="Close">&times;</button></li>
+            <li class="drawer-title">Marfil</li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="blog.html">Blog</a></li>
+        </ul>
+    </nav>
+
+    <section class="gallery-section">
+        <h2>My Photo Gallery</h2>
+        <div class="gallery-grid">
+
+            <div class="gallery-loading">Loading images...</div>
+        </div>
+        
+        <div class="gallery-controls">
+            <button id="load-more">Load More</button>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div class="caption"></div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Marfil. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/sheinamonroll" target="_blank">Facebook</a>
+                <a href="https://github.com/shinilll" target="_blank">GitHub</a>
+                <a href="https://www.instagram.com/sheinamonroll/" target="_blank">Instagram</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    <script src="js/gallery.js"></script>
+</body>
+</html>
